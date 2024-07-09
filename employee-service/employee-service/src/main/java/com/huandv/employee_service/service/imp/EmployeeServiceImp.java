@@ -1,6 +1,7 @@
 package com.huandv.employee_service.service.imp;
 
-import com.huandv.employee_service.config.ApiClient;
+import com.huandv.employee_service.config.ApiClientDepartment;
+import com.huandv.employee_service.config.ApiClientOrganization;
 import com.huandv.employee_service.dto.ApiResponseDto;
 import com.huandv.employee_service.dto.DepartmentDto;
 import com.huandv.employee_service.dto.EmployeeDto;
@@ -26,7 +27,8 @@ import java.time.LocalDateTime;
 public class EmployeeServiceImp implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final ModelMapper modelMapper;
-    private final ApiClient client;
+    private final ApiClientDepartment apiClientDepartment;
+    private final ApiClientOrganization apiClientOrganization;
 
     @Override
     public EmployeeDto createEmployee(EmployeeDto employeeDto) {
@@ -48,9 +50,9 @@ public class EmployeeServiceImp implements EmployeeService {
     public ApiResponseDto getEmployee(Long id) {
         Employee employee = employeeRepository.getEmployeeById(id);
 
-        DepartmentDto department = client.getDepartment(employee.getDepartmentCode());
+        DepartmentDto department = apiClientDepartment.getDepartment(employee.getDepartmentCode());
         EmployeeDto employeeDto = modelMapper.map(employee, EmployeeDto.class);
-        OrganizationDto organizationDto = client.getOrganization(employee.getOrganizationCode());
+        OrganizationDto organizationDto = apiClientOrganization.getOrganization(employee.getOrganizationCode());
 
         ApiResponseDto response= new ApiResponseDto(department,employeeDto,organizationDto);
         return response;

@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 /**
  * @Description:
  * @Project: microservice_spring-cloud
@@ -23,6 +25,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     @Override
     public OrganizationDto saveOrganization(OrganizationDto organizationDto) {
         Organization organization = modelMapper.map(organizationDto, Organization.class);
+        organization.setCreatedDate(LocalDateTime.now());
         Organization savedOrganization = organizationRepository.save(organization);
         return  modelMapper.map(savedOrganization, OrganizationDto.class);
     }

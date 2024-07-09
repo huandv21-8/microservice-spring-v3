@@ -21,7 +21,7 @@ public class ApiGatewayRouterConfiguration {
                 .route(p->p.path("/employee").uri("https://www.facebook.com/"))
                 .route(p->p.path("/employee/**").uri("lb://EMPLOYEE-SERVICE"))
                 .route(p->p.path("/department/**").uri("lb://department-SERVICE"))
-                .route(p->p.path("/organization/**").uri("lb://organization-service"))
+                .route(p->p.path("/organizations/**").uri("lb://organization-service"))
                 .build();
     }
 }
