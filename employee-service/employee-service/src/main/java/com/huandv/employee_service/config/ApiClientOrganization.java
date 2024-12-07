@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 @FeignClient(name = "Organization-SERVICE")
 public interface ApiClientOrganization {
-    @GetMapping("organizations/{code}")
+    @GetMapping("/organizations/{code}")
     OrganizationDto getOrganization(@PathVariable("code") String organizationCode);
 
 }
