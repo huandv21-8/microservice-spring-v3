@@ -6,13 +6,13 @@ import com.huandv.department_service.repository.DepartmentRepository;
 import com.huandv.department_service.service.DepartmentService;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- * @Description:
+ * @Description: DepartmentServiceImp
  * @Project: microservice_spring-cloud
  * @Date: 7/2/2024 9:37 AM
  * @Author: crist
@@ -22,6 +22,7 @@ import java.util.Optional;
 public class DepartmentServiceImp implements DepartmentService {
     private final DepartmentRepository departmentRepository;
     private final ModelMapper modelMapper;
+    private final Environment environment;
 
     public DepartmentDto createDepartment(DepartmentDto departmentDto) {
         Department department = new Department(
@@ -33,14 +34,13 @@ public class DepartmentServiceImp implements DepartmentService {
 
         Department saveDepartment = departmentRepository.save(department);
 
-        DepartmentDto response = modelMapper.map(saveDepartment, DepartmentDto.class);
-        return response;
+      return modelMapper.map(saveDepartment, DepartmentDto.class);
     }
 
     @Override
     public DepartmentDto getDepartment(String departmentCode) {
         List<Department> department = departmentRepository.findByDepartmentCode(departmentCode);
-        DepartmentDto response = modelMapper.map(department.get(0), DepartmentDto.class);
-        return response;
+        System.out.println("post using: " + environment.getProperty("local.server.port"));
+      return modelMapper.map(department.get(0), DepartmentDto.class);
     }
 }
